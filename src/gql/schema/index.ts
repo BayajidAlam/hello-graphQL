@@ -13,7 +13,7 @@ export const typeDefs = `#graphql
   type Category {
     id: ID!,
     name: String,
-    product: [Product]
+    products: [Product]
   }
 
   type Query {
