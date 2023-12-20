@@ -4,31 +4,26 @@ export const resolvers = {
   Query: {
     products: () => db.products,
     product: (parent: any, args: { productId: string }, context: any) => {
-      const result = db.products.find((pd) => pd.id === args.productId);
-      return result;
+      return db.products.find((pd) => pd.id === args.productId);
     },
     categories: () => db.categories,
     category: (parent: any, args: { categoryId: string }, context: any) => {
-      const result = db.categories.find((ct) => ct.id === args.categoryId);
-      return result;
+      return db.categories.find((ct) => ct.id === args.categoryId);
     },
   },
 
   Product: {
-    category: (parent: any, args: { categoryId: string }, context: any) => {
-      const result = db.categories.find((ct) => ct.id === parent.categoryId);
-      return result;
+    category: ({ categoryId }, args: { categoryId: string }, context: any) => {
+      return db.categories.find((ct) => ct.id === categoryId);
     },
-    reviews: (parent: any, args: { categoryId: string }, context: any) => {
-      const result = db.reviews.filter((re) => re.productId === parent.id);
-      return result;
+    reviews: ({ id }, args: { categoryId: string }, context: any) => {
+      return db.reviews.filter((re) => re.productId === id);
     },
   },
 
   Category: {
-    products: (parent: any, args: any, context: any) => {
-      const result = db.products.filter((pd) => pd.categoryId === parent.id);
-      return result;
+    products: ({ id }, args: any, context: any) => {
+      return db.products.filter((pd) => pd.categoryId === id);
     },
   },
 };
